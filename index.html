@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joshua Petit | Portfolio InfoNum</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Inter:wght@400;700;900&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+        
+        html { scroll-behavior: smooth; }
+
+        :root {
+            --bg: #050505;
+            --accent: #2563eb; 
+            --text: #ffffff;
+            --dim: #64748b;
+            --academic: #10b981; 
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 25px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-logo {
+            font-family: 'Syncopate', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: clamp(15px, 3vw, 40px);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dim);
+            font-size: 0.65rem;
+            font-family: 'Syncopate', sans-serif;
+            letter-spacing: 1.5px;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .nav-links a:hover { color: var(--accent); }
+
+        .bg-text {
+            position: fixed;
+            font-size: 12vw;
+            font-family: 'Syncopate', sans-serif;
+            font-weight: 900;
+            color: rgba(37, 99, 235, 0.03);
+            z-index: -1;
+            white-space: nowrap;
+            user-select: none;
+            top: 30%;
+            left: -2%;
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 140px 8% 100px;
+        }
+
+        @keyframes revealText {
+            0% { clip-path: inset(0 100% 0 0); filter: blur(10px); opacity: 0; }
+            100% { clip-path: inset(0 0 0 0); filter: blur(0); opacity: 1; }
+        }
+
+        .hero { display: flex; flex-direction: column; justify-content: center; border-bottom: 1px solid #111; }
+        .hero h1 { 
+            font-family: 'Syncopate', sans-serif; 
+            font-size: clamp(3rem, 10vw, 8rem); 
+            line-height: 0.95; 
+            text-transform: uppercase; 
+            letter-spacing: -2px;
+            animation: revealText 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+        .hero h1:nth-child(2) { animation-delay: 0.3s; }
+        .outline { color: transparent; -webkit-text-stroke: 1px var(--text); }
+        .accent-color { color: var(--accent); }
+        
+        .name-meta-container {
+            margin-top: 50px;
+            display: flex;
+            align-items: baseline;
+            gap: 20px;
+            opacity: 0;
+            animation: revealText 1s ease-out 0.8s forwards;
+        }
+        .name-tag { font-size: clamp(1.2rem, 2.5vw, 2rem); font-weight: 900; letter-spacing: 6px; text-transform: uppercase; color: var(--accent); }
+        .but-tag { font-size: clamp(0.7rem, 1.2vw, 1rem); font-weight: 400; color: var(--dim); letter-spacing: 2px; text-transform: uppercase; }
+
+        .profile-container {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 50px;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .profile-container::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 30px; height: 30px;
+            border-top: 3px solid var(--accent);
+            border-left: 3px solid var(--accent);
+        }
+
+        .about-grid { 
+            display: grid; 
+            grid-template-columns: 200px 1fr; 
+            gap: 60px; 
+            align-items: start;
+        }
+
+        .profile-left { display: flex; flex-direction: column; gap: 20px; }
+        .profile-photo-container {
+            width: 100%; 
+            border: 1px solid var(--accent); border-radius: 12px;
+            overflow: hidden;
+        }
+        .profile-photo { width: 100%; height: auto; display: block; object-fit: contain; filter: grayscale(100%); transition: 0.5s; }
+        .profile-photo:hover { filter: grayscale(0%); transform: scale(1.05); }
+
+        .status-badge {
+            background: rgba(37, 99, 235, 0.1); border: 1px solid var(--accent);
+            padding: 10px; border-radius: 8px; text-align: center;
+        }
+        .status-badge p { font-size: 11px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+
+        .about-content { display: grid; grid-template-columns: 1fr 200px; gap: 40px; }
+        .about-text { font-size: 0.95rem; color: #cbd5e1; text-align: justify; }
+        .about-text p { margin-bottom: 20px; }
+
+        .interest-list { list-style: none; font-family: 'Syncopate', sans-serif; }
+        .interest-list li { padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--dim); }
+        .interest-list li span { color: var(--accent); }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .skill-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--card-border);
+            padding: 35px;
+            border-radius: 12px;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .skill-card:hover { border-color: var(--accent); background: rgba(37, 99, 235, 0.05); }
+
+        .skill-number { font-family: 'Syncopate', sans-serif; font-size: 0.6rem; color: var(--accent); opacity: 0.5; }
+
+        .skill-card h3 { font-family: 'Syncopate', sans-serif; font-size: 0.8rem; color: #fff; letter-spacing: 2px; text-transform: uppercase; }
+
+        .skill-card .skill-description { font-size: 0.85rem; color: #94a3b8; line-height: 1.6; text-align: left; }
+
+        .skill-card .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); }
+
+        .skill-tag-mini { font-size: 0.5rem; color: var(--accent); border: 1px solid rgba(37, 99, 235, 0.3); padding: 3px 8px; border-radius: 2px; text-transform: uppercase; }
+
+        .section-separator {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 0.7rem; letter-spacing: 10px; color: var(--dim);
+            margin-top: 60px; margin-bottom: 30px;
+            display: flex; align-items: center; gap: 20px;
+        }
+        .section-separator::after { content: ""; height: 1px; flex: 1; background: #1e293b; }
+
+        .project-card { 
+            background: #0a0a0a; border: 1px solid #1e293b; border-radius: 12px; 
+            padding: 25px; 
+            display: flex; gap: 30px; align-items: flex-start;
+            margin-bottom: 30px; 
+        }
+        .card-academic { border-left: 4px solid var(--academic); }
+        .card-experience { border-left: 4px solid var(--accent); }
+        
+        .project-image-container { 
+            flex: 0 0 20%; 
+            border-radius: 8px; overflow: hidden; border: 1px solid #1e293b; 
+        }
+        
+        #doritos-img { height: 400px; object-fit: cover; } 
+        .project-image { width: 100%; height: auto; display: block; object-fit: cover; } 
+        
+        .project-info { flex: 1; }
+        .project-title { font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 12px; }
+        .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.55rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; }
+        .badge-academic { background: rgba(16, 185, 129, 0.1); color: var(--academic); border: 1px solid var(--academic); }
+        .badge-experience { background: rgba(37, 99, 235, 0.1); color: var(--accent); border: 1px solid var(--accent); }
+        
+        .full-text { color: #cbd5e1; font-size: 0.9rem; text-align: justify; }
+        .full-text p { margin-bottom: 10px; }
+        .full-text p:last-child { margin-bottom: 0; }
+
+        .tag-skill { font-size: 0.55rem; color: #94a3b8; background: #111827; padding: 4px 10px; border-radius: 4px; border: 1px solid #1e293b; text-transform: uppercase; margin-right: 5px; margin-top: 10px; display: inline-block;}
+
+        .btn-link { 
+            display: inline-block; margin-top: 12px; color: var(--accent); text-decoration: none; 
+            font-weight: bold; border: 1px solid var(--accent); padding: 4px 10px; 
+            border-radius: 5px; font-size: 0.75rem; transition: 0.3s; margin-right: 10px;
+        }
+        .btn-link:hover { background: var(--accent); color: white; }
+
+        .contact-link { font-family: 'Syncopate', sans-serif; font-size: clamp(4rem, 16vw, 13rem); text-decoration: none; color: var(--text); transition: 0.4s; line-height: 1; }
+        .contact-link:hover { color: var(--accent); }
+
+        .contact-info-container { display: flex; flex-direction: column; gap: 30px; font-family: 'Syncopate', sans-serif; font-size: clamp(1.1rem, 2.8vw, 2.2rem); letter-spacing: 3px; margin-top: 40px; }
+        .contact-info-container a { color: var(--dim); text-decoration: none; transition: 0.3s; }
+        .contact-info-container a:hover { color: var(--text); }
+        .contact-info-container span { color: #fff; border-bottom: 2px solid var(--accent); }
+
+        footer { padding: 60px; text-align: center; font-size: 0.7rem; color: var(--dim); letter-spacing: 4px; }
+
+        @media (max-width: 1100px) {
+            .about-grid, .about-content { grid-template-columns: 1fr; }
+            .project-card { flex-direction: column; gap: 20px; }
+            .project-image-container { width: 100%; max-width: 300px; margin: 0 auto; }
+            #doritos-img { height: auto; }
+            .skills-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#home" class="nav-logo">JOSHUA PETIT</a>
+        <div class="nav-links">
+            <a href="#about">Profil</a>
+            <a href="#skills">Compétences</a>
+            <a href="#projects">Travaux</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <div class="bg-text">COMMUNICATION</div>
+
+    <section id="home" class="hero">
+        <h1 class="outline">Étudiant</h1>
+        <h1>Info<span class="accent-color">Num</span></h1>
+        <div class="name-meta-container">
+            <div class="name-tag">Joshua Petit</div>
+            <div class="but-tag">BUT 2025 2026</div>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2 style="color: var(--dim); margin-bottom: 40px; font-size: 0.8rem; letter-spacing: 5px;">01 // PROFIL</h2>
+        <div class="profile-container">
+            <div class="about-grid">
+                <div class="profile-left">
+                    <div class="profile-photo-container">
+                        <img src="images/clair-obscure-joshua-1.jpg" alt="" class="profile-photo" >
+                    </div>
+                    <div class="status-badge">
+                        <p>IUT BORDEAUX MONTAIGNE</p>
+                    </div>
+                </div>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Je m’appelle <b>Joshua Petit</b>, j’ai 20 ans. Après une année en science politique au sein de l’Université de Lille, j’ai décidé de me réorienter vers un domaine plus en lien avec mes centres d’intérêt et mon projet professionnel.</p>
+                        <p>Je suis actuellement étudiant en <b>BUT Information-Communication</b>, parcours Information Numérique dans les Organisations, à l’IUT Bordeaux Montaigne.</p>
+                        <p>En parallèle de mes études, je suis <b>Community Manager bénévole</b> au sein d’un club de basket. Je gère les réseaux sociaux du club en créant des contenus (publications, visuels, annonces de matchs, résultats) et en mettant en avant la vie du club. Cette expérience me permet de développer ma créativité, mon sens de l’organisation et ma capacité à adapter ma communication en fonction des publics.</p>
+                        <p>Mon projet professionnel est de devenir <b>Community Manager dans un club sportif professionnel</b>. Je pratique le basket en compétition depuis 14 ans, ce qui m’a permis de développer une vraie connaissance de cet univers, en plus de ma passion pour le sport.</p>
+                        <p>Sérieux, motivé et impliqué, je souhaite continuer à progresser pour développer mes compétences et me rapprocher de mon objectif professionnel.</p>
+                    </div>
+                    <div class="passions-box">
+                        <h3 style="color: var(--accent); font-size: 0.6rem; letter-spacing: 3px; margin-bottom: 20px; font-family: 'Syncopate', sans-serif;">PASSIONS</h3>
+                        <ul class="interest-list">
+                            <li>BASKETBALL <span>+</span></li>
+                            <li>E-SPORT <span>+</span></li>
+                            <li>MUSIQUE <span>+</span></li>
+                            <li>LECTURE <span>+</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2 style="color: var(--dim); margin-bottom: 40px; font-size: 0.8rem; letter-spacing: 5px;">02 // COMPÉTENCES</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <span class="skill-number">01.</span>
+                <h3>Veille Informationnelle</h3>
+                <div class="skill-description">
+                    Tout au long de mon année au sein du BUT InfoNum, j’ai pu développer mes compétences en veille informationnelle. J’ai appris à identifier des sources fiables, à suivre l’actualité technologique et numérique, et à analyser les tendances émergentes. Cette démarche m’a permis de rester informé des nouvelles pratiques, outils et innovations, tout en développant mon esprit critique face à la quantité d’informations disponibles. Ainsi, j’ai acquis une méthode rigoureuse pour collecter, trier et exploiter l’information de manière pertinente, ce qui constitue un atout important pour mon parcours professionnel.
+                </div>
+                <div class="skill-tags">
+                    <span class="skill-tag-mini">Sourcing</span>
+                    <span class="skill-tag-mini">Analyse</span>
+                    <span class="skill-tag-mini">Tendances</span>
+                </div>
+            </div>
+            <div class="skill-card">
+                <span class="skill-number">02.</span>
+                <h3>Communication Digitale</h3>
+                <div class="skill-description">
+                    En tant que bénévole au sein du club de Saint-Médard Basket en tant que community manager, j’ai développé des compétences en gestion de la communication digitale. J’ai été en charge de la création et de la publication de contenus sur les réseaux sociaux afin de valoriser l’image du club, promouvoir les événements et informer les membres. Cette expérience m’a permis d’apprendre à adapter le ton et le format des publications en fonction du public cible, à planifier une stratégie de contenu cohérente, et à analyser les retours (engagement, interactions) pour améliorer la visibilité. J’ai également renforcé mon autonomie, ma créativité et ma capacité à travailler avec différents acteurs du club.
+                </div>
+                <div class="skill-tags">
+                    <span class="skill-tag-mini">Réseaux sociaux</span>
+                    <span class="skill-tag-mini">Image numérique</span>
+                    <span class="skill-tag-mini">Engagement</span>
+                </div>
+            </div>
+            <div class="skill-card">
+                <span class="skill-number">03.</span>
+                <h3>Cataloguage</h3>
+                <div class="skill-description">
+                    Au cours de ma formation, j’ai développé des compétences en catalogage numérique à travers l’utilisation du logiciel PMB. J’ai appris à décrire et organiser des ressources documentaires en respectant des normes de catalogage, en renseignant des métadonnées pertinentes et en assurant une indexation efficace. Cette expérience m’a permis de comprendre les enjeux liés à la gestion et à la valorisation de l’information dans un système documentaire. J’ai également acquis de la rigueur et de la précision dans le traitement des données, des qualités essentielles pour garantir la fiabilité et l’accessibilité des ressources numériques.
+                </div>
+                <div class="skill-tags">
+                    <span class="skill-tag-mini">PMB</span>
+                    <span class="skill-tag-mini">Métadonnées</span>
+                    <span class="skill-tag-mini">Système Documentaire</span>
+                </div>
+            </div>
+            <div class="skill-card">
+                <span class="skill-number">04.</span>
+                <h3>Outils PAO</h3>
+                <div class="skill-description">
+                    Dans le cadre de mes expériences, j’ai développé des compétences dans l’utilisation de logiciels de PAO (Publication Assistée par Ordinateur), tels que Photoshop, Illustrator ou Canva. J’ai appris à concevoir des supports visuels attractifs et adaptés aux besoins de communication, notamment pour les réseaux sociaux et les supports promotionnels. Cette pratique m’a permis de maîtriser les bases du design graphique, comme la gestion des couleurs, des typographies et de la mise en page, tout en respectant une identité visuelle cohérente. J’ai également développé ma créativité ainsi que ma capacité à traduire un message en un visuel clair, impactant et professionnel.
+                </div>
+                <div class="skill-tags">
+                    <span class="skill-tag-mini">Photoshop</span>
+                    <span class="skill-tag-mini">Illustrator</span>
+                    <span class="skill-tag-mini">Canva</span>
+                </div>
+            </div>
+            <div class="skill-card" style="grid-column: span 2;">
+                <span class="skill-number">05.</span>
+                <h3>Rédaction Professionnelle</h3>
+                <div class="skill-description">
+                    Au cours de mon année en BUT InfoNum, j’ai développé des compétences en rédaction professionnelle à travers la réalisation de plusieurs rapports et dossiers, notamment dans le cadre des SAÉ. Ces travaux m’ont permis d’apprendre à structurer mes idées de manière clara et logique, à adopter un ton formel adapté au contexte professionnel, et à synthétiser des informations complexes. J’ai également acquis une rigueur dans la rédaction, en portant une attention particulière à la qualité de la langue, à l’argumentation et à la mise en forme des documents.
+                </div>
+                <div class="skill-tags">
+                    <span class="skill-tag-mini">SAÉ</span>
+                    <span class="skill-tag-mini">Synthèse</span>
+                    <span class="skill-tag-mini">Rigueur</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2 style="color: var(--dim); margin-bottom: 20px; font-size: 0.8rem; letter-spacing: 5px;">03 // TRAVAUX</h2>
+        
+        <div class="section-separator">ACADÉMIQUE</div>
+        
+        <div class="project-card card-academic">
+            <div class="project-image-container">
+                <img src="images/doritos.gif" alt="" class="project-image" id="doritos-img">
+            </div>
+            <div class="project-info">
+                <span class="badge badge-academic">Production Audiovisuelle</span>
+                <div class="project-title">Projet : Conception et réalisation d’une publicité – Doritos</div>
+                <div class="full-text">
+                    <p>Dans le cadre de ce projet, nous avons conçu et réalisé une publicité de 30 secondes pour Doritos, en nous inspirant des standards des campagnes diffusées lors du Super Bowl. L’objectif était de produire un contenu à la fois impactant, narratif et divertissant, en respectant des contraintes de format et de temps.</p>
+                    <p>Le concept repose sur une situation simple qui évolue vers un scénario original : trois amis partagent un paquet de Doritos jusqu’à ce qu’il ne reste plus qu’une seule chips, déclenchant un conflit. Cette situation bascule dans une mise en scène décalée avec la personnification de la chips, qui devient le centre d’une course-poursuite urbaine, jusqu’à une chute inattendue.</p>
+                    <p>Le projet s’est structuré en plusieurs phases. Une première étape de réflexion collective a permis de définir l’axe créatif, le ton humoristique, ainsi que la narration. Nous avons ensuite sélectionné les lieux de tournage en fonction des contraintes logistiques et visuelles. Le tournage s’est déroulé sur deux jours, avec une répartition clara des rôles (réalisation, cadrage, jeu d’acteur).</p>
+                    <p>La post-production a constitué une phase déterminante, incluant le dérushage, le montage, l’ajout d’effets visuels et le travail sur le rythme narrative. Cette étape a nécessité l’apprentissage autonome d’outils de montage ainsi qu’une attention particulière à la cohérence visuelle et sonore.</p>
+                </div>
+                <span class="tag-skill">Narration</span><span class="tag-skill">Post-production</span><span class="tag-skill">Réalisation</span>
+                <br>
+                <a href="images/pub-doritos-1.mov" class="btn-link" target="_blank">Vidéo</a>
+            </div>
+        </div>
+
+        <div class="project-card card-academic">
+            <div class="project-image-container">
+                <img src="images/capture-2026-04-02-190538.png" alt="" class="project-image" >
+            </div>
+            <div class="project-info">
+                <span class="badge badge-academic">Rapport professionnel</span>
+                <div class="project-title">Projet : Analyse d’un système d’information – Université Bordeaux Montaigne</div>
+                <div class="full-text">
+                    <p>Dans le cadre de ma formation en BUT Information-Communication (parcours Information Numérique dans les Organisations) à l’IUT Bordeaux Montaigne, j’ai participé à un projet d’analyse du système d’information de l’Université Bordeaux Montaigne.</p>
+                    <p>L’objectif de ce projet était d’évaluer la visibilité, la lisibilité et l’accessibilité des services numériques proposés aux étudiants, en identifiant les éventuelles limites et en proposant des axes d’amélioration concrets.</p>
+                    <p>Nous avons mené une analyse approfondie du site institutionnel, en étudiant son ergonomie, sa structure, ainsi que l’expérience utilisateur. Ce travail a été complété par un benchmark comparatif avec d’autres universités françaises, notamment celles de Montpellier et de Limoges, afin d’identifier les bonnes pratiques en matière de navigation et d’accès à l’information.</p>
+                    <p>En parallèle, nous avons réalisé une enquête auprès d’étudiants afin d’identifier leurs besoins informationnels. L’analyse des résultats a mis en évidence plusieurs problématiques majeures : un manque de lisibilité des services, une difficulté d’accès à l’information, ainsi qu’une communication jugée insuffisante. Ces constats ont été structurés à l’aide de la méthode MOSCOW afin de prioriser les besoins.</p>
+                </div>
+                <span class="tag-skill">Analyse de besoins</span><span class="tag-skill">Benchmark</span><span class="tag-skill">MOSCOW</span>
+                <br>
+                <a href="images/sae-analyse-si-petit-joshua-1.pdf" class="btn-link" target="_blank">PDF</a>
+            </div>
+        </div>
+
+        <div class="section-separator">EXPÉRIENCE & ENGAGEMENT</div>
+
+        <div class="project-card card-experience">
+            <div class="project-image-container">
+                <img src="images/titre.png" alt="" class="project-image">
+            </div>
+            <div class="project-info">
+                <span class="badge badge-experience">Événementiel / e-Sport</span>
+                <div class="project-title">Projet : Organisation d’un tournoi Clash Royale – IUT</div>
+                <div class="full-text">
+                    <p>Dans le cadre de ma formation à l’IUT, j’ai participé à la conception et à l’organisation d’un tournoi autour du jeu Clash Royale. L’objectif de ce projet était de créer un événement structuré et engageant, tout en mobilisant des compétences en gestion de projet, communication et organisation.</p>
+                    <p>Le projet a débuté par une phase de réflexion collective visant à définir le format du tournoi (règles, système d’élimination, déroulement des matchs) ainsi que les modalités de participation. Nous avons ensuite travaillé sur la planification globale de l’événement, en prenant en compte les contraintes de temps, de logistique et de coordination entre les participants.</p>
+                    <p>Une attention particulière a été portée à la communication autour du tournoi afin d’assurer une participation suffisante. Nous avons également mis en place des outils de suivi pour organiser les matchs, gérer les résultats et garantir le bon déroulement de la compétition.</p>
+                </div>
+                <span class="tag-skill">Gestion Projet</span><span class="tag-skill">Logistique</span><span class="tag-skill">Campagne de communication</span>
+            </div>
+        </div>
+
+        <div class="project-card card-experience">
+            <div class="project-image-container">
+                <img src="images/img_5630.png" alt="" class="project-image" >
+            </div>
+            <div class="project-info">
+                <span class="badge badge-experience">Community Management</span>
+                <div class="project-title">Expérience : Community Manager bénévole – Saint-Médard Basket</div>
+                <div class="full-text">
+                    <p>Dans le cadre de mon engagement associatif, je participe activement à la stratégie de communication digitale du club en tant que Community Manager bénévole. Mon objectif est de mettre en valeur l’image du club et de renforcer sa visibilité en ligne à travers des contenus réguliers et attractifs.</p>
+                    <p>Je m’occupe de la gestion des réseaux sociaux, de la création à la diffusion des publications : annonces de matchs, résultats, événements, mais aussi moments de la vie quotidienne du club. J’adapte les formats et les messages selon les plateformes et les publics, afin de susciter l’engagement de la communauté et d’attirer de nouveaux abonnés.</p>
+                    <p>Cette mission m’a permis d’acquérir une vision concrète de la communication digitale : je planifie les contenus en suivant une ligne éditoriale claire, j’analyse les retours et les performances des publications pour améliorer continuellement la stratégie, et je veille à entretenir une interaction active avec les abonnés. L’objectif est de créer un lien authentique avec la communauté et de renforcer l’attachement des supporters au club.</p>
+                    <p>Au-delà des aspects techniques, cette expérience m’a appris à être organisé, réactif et créatif, tout en développant ma capacité à travailler sur des projets concrets avec un impact réel sur la visibilité et l’image d’une structure.</p>
+                </div>
+                <span class="tag-skill">Réseaux sociaux</span><span class="tag-skill">Communication numérique</span>
+                <br>
+                <a href="https://www.instagram.com/saintmedardbasket33160/" class="btn-link" target="_blank">Instagram</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 40px; min-height: 90vh;">
+        <a href="mailto:joshuapetit055@gmail.com" class="contact-link">CONTACT</a>
+        <div class="contact-info-container">
+            <a href="mailto:joshuapetit055@gmail.com">EMAIL : <span>joshuapetit055@gmail.com</span></a>
+            <a href="https://www.linkedin.com/feed/" target="_blank">LINKEDIN : <span>JOSHUA PETIT</span></a>
+        </div>
+    </section>
+
+    <footer>
+        JOSHUA PETIT — 2026 — BUT Information Numérique dans les Organisations
+    </footer>
+
+</body>
+</html>
